@@ -32,7 +32,7 @@ public class Users {
 	
 	private List <Notes> notes;
 	
-//	private Credentials credentials;
+	private List <Credentials> credentials;
 
 	public int getUserid() {
 		return userid;
@@ -116,13 +116,22 @@ public class Users {
 		this.role = role;
 	}
 	
-//	public Credentials getCredentials() {
-//		return credentials;
-//	}
-//
-//	public void setCredentials(Credentials credentials) {
-//		this.credentials = credentials;
-//	}
+
+	public List<Credentials> getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(List<Credentials> credentials) {
+		this.credentials = credentials;
+	}
+
+	@Override
+	public String toString() {
+		return "Users [userid=" + userid + ", username=" + username + ", salt=" + salt + ", password=" + password
+				+ ", firstname=" + firstname + ", lastname=" + lastname + ", enabled=" + enabled + ", role=" + role
+				+ ", files=" + files + ", notes=" + notes + ", credentials=" + credentials + "]";
+	}
+
 	public Collection<GrantedAuthority> getAuthorities() {
         //make everyone ROLE_USER
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();

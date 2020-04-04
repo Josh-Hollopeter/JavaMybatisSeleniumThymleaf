@@ -6,5 +6,7 @@ public interface CrudServiceInterface {
 	
 	
 	public Notes editNotes(Notes note);
+	
+	public String generateRandomKey();
 
 }

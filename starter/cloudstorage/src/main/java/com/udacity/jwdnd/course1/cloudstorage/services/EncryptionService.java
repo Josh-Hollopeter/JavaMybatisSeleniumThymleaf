@@ -18,6 +18,8 @@ public class EncryptionService {
 
     public String encryptValue(String data, String key) {
         byte[] encryptedValue = null;
+        System.out.println(data);
+        System.out.println(key);
 
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");

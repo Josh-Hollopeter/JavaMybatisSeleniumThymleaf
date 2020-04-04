@@ -25,7 +25,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" method="POST">
+                        <form th:action="@{/addfile.do}" enctype="multipart/form-data" method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -137,14 +137,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
-                                    </td>
-                                    <th scope="row">Example Credential URL</th>
-                                    <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>
+                                <tr th:each="credentials: ${session.user.credentials}">
+                                        <td>
+                                         <button type="button" class="btn btn-success" th:onclick="javascript:showCredentialModal( [[${credentials.credentialid}]],[[${credentials.url}]],[[${credentials.username}]],[[${credentials.password}]] )" >Edit</button> <!-- </a> -->
+                                            <a th:href ="@{/deleteCredential.do?(credentialid=${credentials.credentialid})}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                        <th scope="row" th:text ="${credentials.url}"> </th>
+                                        <td th:text ="${credentials.username}"> </td>
+                                        <td th:text ="${credentials.password}"> </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -160,8 +160,10 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST">
-                                            <input type="hidden" name="credentialId" id="credential-id">
+                                        <form method="POST" th:action="@{/addCredential.do}" th:object="${Credentials}">
+                                            <input type="hidden" name="credentialid" id="credential-id">
+                                            <input type="hidden" name = "credentialid" id="credential-id" value =0 th:if="${credentialid} == null">
+                                            
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>
                                                 <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" required>
@@ -171,8 +173,8 @@
                                                 <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="note-title" class="col-form-label">Password</label>
-                                                <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required>
+                                               <label for="note-title" class="col-form-label">Password</label> <Span style="padding:35px;color:blue;" onclick="decryptPassword('${credentialid}')"> Decrypt</Span>
+                                               <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required> 
                                             </div>
                                             <button id="credentialSubmit" type="submit" class="d-none"></button>
                                         </form>
@@ -210,6 +212,9 @@
                 $('#credential-username').val(username ? username : '');
                 $('#credential-password').val(password ? password : '');
                 $('#credentialModal').modal('show');
+            }
+            function decryptPassword(credentialid){
+            	window.location = '/decrypt.do?credentialid='+credentialid;
             }
         </script>
     </body>

@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http 
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
         http
         .authorizeRequests()
         .antMatchers("**").permitAll()

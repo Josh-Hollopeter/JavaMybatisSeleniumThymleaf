@@ -10,7 +10,7 @@ public class Files {
 	
 	private String contenttype;
 	
-	private String filesize;
+	private Long filesize;
 	
 //	private Integer userid;
 	
@@ -40,22 +40,23 @@ public class Files {
 		this.contenttype = contenttype;
 	}
 
-	public String getFilesize() {
+
+
+
+	public Long getFilesize() {
 		return filesize;
 	}
 
-	public void setFilesize(String filesize) {
+	public void setFilesize(Long filesize) {
 		this.filesize = filesize;
 	}
-
-
 
 	public byte[] getFiledata() {
 		return filedata;
 	}
 
-	public void setFiledata(byte[] filedata) {
-		this.filedata = filedata;
+	public void setFiledata(byte[] bs) {
+		this.filedata = bs;
 	}
 	
 

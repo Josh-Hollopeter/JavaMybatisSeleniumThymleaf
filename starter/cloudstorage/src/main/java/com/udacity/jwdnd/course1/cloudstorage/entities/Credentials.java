@@ -2,23 +2,23 @@ package com.udacity.jwdnd.course1.cloudstorage.entities;
 
 public class Credentials {
 	
-	private int credentialid;
+	private Integer credentialid;
 	
 	private String url;
 	
 	private String username;
 	
-	private String key;
+	private String skeleton;
 	
 	private String password;
 	
 //	private Integer userid;
 
-	public int getCredentialid() {
+	public Integer getCredentialid() {
 		return credentialid;
 	}
 
-	public void setCredentialid(int credentialid) {
+	public void setCredentialid(Integer credentialid) {
 		this.credentialid = credentialid;
 	}
 
@@ -38,12 +38,14 @@ public class Credentials {
 		this.username = username;
 	}
 
-	public String getKey() {
-		return key;
+	
+
+	public String getSkeleton() {
+		return skeleton;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setSkeleton(String skeleton) {
+		this.skeleton = skeleton;
 	}
 
 	public String getPassword() {
