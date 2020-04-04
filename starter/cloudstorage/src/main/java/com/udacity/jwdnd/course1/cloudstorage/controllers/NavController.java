@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.udacity.jwdnd.course1.cloudstorage.entities.Users;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.CredentialsMapper;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.FilesMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.NotesMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.UsersMapper;
 
@@ -23,7 +24,11 @@ public class NavController {
 	@Autowired
 	private NotesMapper notesMapper;
 	
-	@Autowired private CredentialsMapper credentialsMapper;
+	@Autowired 
+	private CredentialsMapper credentialsMapper;
+	
+	@Autowired
+	private FilesMapper filesMapper;
 
 	@RequestMapping("/")
 	public String home(HttpSession session, Users user, Model model) {
@@ -55,6 +60,7 @@ public class NavController {
 		if (BCrypt.checkpw(user.getPassword(), storedUser.getPassword())) {
 			storedUser.setNotes(notesMapper.findNoteByUserId(storedUser.getUserid()));
 			storedUser.setCredentials(credentialsMapper.findCredentialByUserId(storedUser.getUserid()));
+			storedUser.setFiles(filesMapper.findFilesByUserId(storedUser.getUserid()));
 			session.setAttribute("user", storedUser);
 			return "home";
 		}

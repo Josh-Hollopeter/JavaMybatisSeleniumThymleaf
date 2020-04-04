@@ -16,6 +16,9 @@ public interface FilesMapper {
 	@Select("select * from files where files.userid = #{id}")
     List<Files> findFilesByUserId(@Param("id") Integer id);
 	
+	@Select("select * from files where files.fileid = #{id}")
+    Files findFilesByFileId(@Param("id") Integer id);
+	
 	@Insert("insert into files(filename,contenttype, filesize, filedata, userid ) VALUES (#{file.filename}, #{file.contenttype}, #{file.filesize}, #{file.filedata},#{userid})")
  	Integer addFiletoDatabase(@Param("file") Files file, @Param("userid") Integer userid);
 

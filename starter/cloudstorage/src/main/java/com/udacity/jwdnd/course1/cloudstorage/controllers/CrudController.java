@@ -2,12 +2,15 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +47,7 @@ public class CrudController {
 
 	@Autowired
 	private EncryptionService encryptionService;
+	
 
 	@RequestMapping("/addNote.do")
 	public String noteCreate(@ModelAttribute("SpringWeb") Notes note, HttpSession session, Users user, Model model) {
@@ -143,5 +147,9 @@ public class CrudController {
 		System.out.println(fileUpload.getOriginalFilename());
 		return "home";
 		
+	}
+	@GetMapping("/img/{id}")
+	public void getImage(@PathVariable("id") Integer id, HttpServletResponse response) {
+	        crudService.writeImageToRespose(id, response);
 	}
 }

@@ -4,7 +4,7 @@ package com.udacity.jwdnd.course1.cloudstorage.entities;
 public class Files {
 	
 	
-	private int fileId;
+	private Integer fileid;
 	
 	private String filename;
 	
@@ -16,12 +16,14 @@ public class Files {
 	
 	private byte [] filedata;
 
-	public int getFileId() {
-		return fileId;
+	
+
+	public Integer getFileid() {
+		return fileid;
 	}
 
-	public void setFileId(int fileId) {
-		this.fileId = fileId;
+	public void setFileid(Integer fileid) {
+		this.fileid = fileid;
 	}
 
 	public String getFilename() {
