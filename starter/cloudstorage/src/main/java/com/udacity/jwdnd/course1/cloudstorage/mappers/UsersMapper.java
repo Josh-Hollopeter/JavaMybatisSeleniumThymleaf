@@ -12,12 +12,19 @@ import com.udacity.jwdnd.course1.cloudstorage.entities.Users;
 @Mapper
 public interface UsersMapper {
 	
+	
+	
     @Select("select * from users")
     List<Users> findAll();
+     
 
     @Select("select * from users where users.userid = #{id}")
     Users findOne(@Param("id") Integer id);
     
+    @Select("select * from users where users.username = #{user.username}")
+    Users getByUsername(@Param("user") Users user);
+    		
+                      
     @Insert("insert into users (username,password,firstname,lastname) values (#{user.username},#{user.password},#{user.firstname},#{user.lastname})")
     Integer register(@Param("user") Users user);
    

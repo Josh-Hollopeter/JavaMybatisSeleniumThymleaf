@@ -5,18 +5,18 @@ package com.udacity.jwdnd.course1.cloudstorage.entities;
 public class Notes {
 	
 	
-	private int noteid;
+	private Integer noteid;
 	
 	private String notetitle;
 	
 	private String notedescription;
 	
 
-	public int getNoteid() {
+	public Integer getNoteid() {
 		return noteid;
 	}
 
-	public void setNoteid(int noteid) {
+	public void setNoteid(Integer noteid) {
 		this.noteid = noteid;
 	}
 
@@ -34,6 +34,11 @@ public class Notes {
 
 	public void setNotedescription(String notedescription) {
 		this.notedescription = notedescription;
+	}
+
+	@Override
+	public String toString() {
+		return "Notes [noteid=" + noteid + ", notetitle=" + notetitle + ", notedescription=" + notedescription + "]";
 	}
 
 
