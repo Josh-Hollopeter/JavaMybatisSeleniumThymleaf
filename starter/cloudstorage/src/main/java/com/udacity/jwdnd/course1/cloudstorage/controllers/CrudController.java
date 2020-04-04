@@ -92,16 +92,18 @@ public class CrudController {
 	public String credentialsCreate(@ModelAttribute("SpringWeb") Credentials credential, HttpSession session,
 			Users user, Model model) {
 		user = (Users) session.getAttribute("user");
-		if (false) {
-			
-			user.setNotes(notesMapper.findNoteByUserId(user.getUserid()));
+		credential.setSkeleton(crudService.generateRandomKey());
+		String password = credential.getPassword();
+		System.out.println("********" + password);
+		credential.setPassword(encryptionService.encryptValue(credential.getPassword(), credential.getSkeleton()));
+		if (credential.getCredentialid() != null) {
+			System.out.println("in add if statement");
+			crudService.editCredentials(credential);
+			user.setCredentials(credentialsMapper.findCredentialByUserId(user.getUserid()));
 			return "home";
 
 		} else {
-			System.out.println(user);
-			credential.setSkeleton(crudService.generateRandomKey());
-			String password = credential.getPassword();
-			credential.setPassword(encryptionService.encryptValue(password, credential.getSkeleton()));
+			System.out.println("in add else statement" + user);
 			System.out.print("decrypted password" + encryptionService.decryptValue(credential.getPassword(), credential.getSkeleton()));
 			credentialsMapper.addCredentialtoDatabase(credential, user.getUserid());
 		}
@@ -121,11 +123,13 @@ public class CrudController {
 		return "home";
 	}
 	
-	@RequestMapping("/decrypt.do{credentialid}")
-	public String decrypt(@RequestParam("credentialid") Integer credentialid, HttpSession session) {
-		System.out.println("in decrypt");
-		return null;
-	}
+//	@RequestMapping("/decrypt.do{credentialid}")
+//	public String decrypt(@RequestParam("credentialid") Integer credentialid, HttpSession session, Model model) {
+//		Credentials credential = credentialsMapper.findCredentialById(credentialid);
+//		String plainText = encryptionService.decryptValue(credential.getPassword(), credential.getSkeleton());
+//		System.out.println(plainText);
+//		return "home";
+//	}
 	
 	// F I L E S
 	

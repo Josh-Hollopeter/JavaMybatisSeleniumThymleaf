@@ -2,7 +2,6 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Base64;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,8 +9,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.udacity.jwdnd.course1.cloudstorage.entities.Credentials;
 import com.udacity.jwdnd.course1.cloudstorage.entities.Files;
 import com.udacity.jwdnd.course1.cloudstorage.entities.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.CredentialsMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.FilesMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.NotesMapper;
 
@@ -23,10 +24,19 @@ public class CrudServiceImpl implements CrudServiceInterface {
 	
 	@Autowired 
 	FilesMapper filesMapper;
+	
+	@Autowired
+	CredentialsMapper credentialsMapper;
 
 	@Override
 	public Notes editNotes(Notes note) {
 		notesMapper.updateNote(note);
+		
+		return null;
+	}
+	@Override
+	public Credentials editCredentials(Credentials credential) {
+		credentialsMapper.updateCredential(credential);
 		
 		return null;
 	}

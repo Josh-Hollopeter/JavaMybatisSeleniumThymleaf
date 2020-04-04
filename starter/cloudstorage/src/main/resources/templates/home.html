@@ -51,12 +51,12 @@
                                 <tbody>
                                 <tr th:each="files: ${session.user.files}">
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
+                                        <a target="th:src=*{'/img/' + files.fileid}" class="btn btn-success">View</a>
                                        <!--  <img th:src="*{'/img/' + files.fileid}"> -->
-                                        <iframe th:src="*{'/img/' + files.fileid}"> </iframe>
+                                      <!--   <iframe th:src="*{'/img/' + files.fileid}"> </iframe> -->
                                         <a  class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <th scope="row" th:text=${files.filename}></th>
                                 </tr>
                                 </tbody>
                             </table>
@@ -141,7 +141,7 @@
                                 <tbody>
                                 <tr th:each="credentials: ${session.user.credentials}">
                                         <td>
-                                         <button type="button" class="btn btn-success" th:onclick="javascript:showCredentialModal( [[${credentials.credentialid}]],[[${credentials.url}]],[[${credentials.username}]],[[${credentials.password}]] )" >Edit</button> <!-- </a> -->
+                                         <button type="button" class="btn btn-success" th:onclick="javascript:showCredentialModal( [[${credentials.credentialid}]],[[${credentials.url}]],[[${credentials.username}]],[[${credentials.password}]] );decryptPassword([[${credentials.credentialid}]])" >Edit</button> <!-- </a> -->
                                             <a th:href ="@{/deleteCredential.do?(credentialid=${credentials.credentialid})}" class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row" th:text ="${credentials.url}"> </th>
@@ -175,8 +175,9 @@
                                                 <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required>
                                             </div>
                                             <div class="form-group">
-                                               <label for="note-title" class="col-form-label">Password</label> <Span style="padding:35px;color:blue;" onclick="decryptPassword('${credentialid}')"> Decrypt</Span>
+                                               <label for="note-title" class="col-form-label">Password</label> 
                                                <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required> 
+                                              <!-- <input onclick="decryptPassword(credential-id);" type="hidden" name= "password" class="form-control" id="credential-password" maxlength="30" th:if="credential-id != null"> -->
                                             </div>
                                             <button id="credentialSubmit" type="submit" class="d-none"></button>
                                         </form>
@@ -216,7 +217,15 @@
                 $('#credentialModal').modal('show');
             }
             function decryptPassword(credentialid){
-            	window.location = '/decrypt.do?credentialid='+credentialid;
+            	let result = fetch('/users/decrypt.do?credentialid='+credentialid).then((response) => response.json())
+            	  
+            	  .then((data) => {
+            		  $('#credential-password').val(data[0].toString());
+            	  });
+            	
+            	;
+            	
+            	
             }
         </script>
     </body>
