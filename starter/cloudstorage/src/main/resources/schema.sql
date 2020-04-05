@@ -3,8 +3,11 @@ CREATE TABLE IF NOT EXISTS USERS (
   username VARCHAR(20) unique,
   salt TEXT,
   password TEXT,
-  firstname VARCHAR(20),
-  lastname VARCHAR(20)
+  firstname VARCHAR(200),
+  lastname VARCHAR(200),
+  role VARCHAR(20),
+  enabled tinyint(4) 
+  
 );
 
 CREATE TABLE IF NOT EXISTS NOTES (
@@ -22,7 +25,8 @@ CREATE TABLE IF NOT EXISTS FILES (
     filesize TEXT,
     userid INT,
     filedata BLOB,
-    foreign key (userid) references USERS(userid)
+    foreign key (userid) references USERS(userid),
+    UNIQUE(filename,userid)
 );
 
 CREATE TABLE IF NOT EXISTS CREDENTIALS (

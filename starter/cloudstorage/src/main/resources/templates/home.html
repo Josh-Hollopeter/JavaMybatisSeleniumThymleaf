@@ -9,6 +9,7 @@
         <title>Home</title>
     </head>
     <body class="p-3 mb-2 bg-light text-black">
+    <div id='hideMe' th:text="${success}"></div>
         <div class="container">
             <div id="logoutDiv">
                 <form action="/logout.do">
@@ -35,7 +36,7 @@
                                         <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                                     </div>
                                     <div class="col-sm-4">
-                                        <button type="submit" class="btn btn-dark">Upload</button>
+                                        <button type="submit" class="btn btn-dark">Upload</button> <p th:text="${fileerror}"></p>
                                     </div>
                                 </div>
                             </div>
