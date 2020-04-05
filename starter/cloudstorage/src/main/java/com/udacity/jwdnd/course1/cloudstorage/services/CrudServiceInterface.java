@@ -1,5 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import com.udacity.jwdnd.course1.cloudstorage.entities.Credentials;
@@ -15,5 +17,8 @@ public interface CrudServiceInterface {
 	void writeImageToRespose(Integer id, HttpServletResponse response);
 
 	public Credentials editCredentials(Credentials credential);
+
+
+//	boolean checkAuthority(List<Object> list, Integer id);
 
 }

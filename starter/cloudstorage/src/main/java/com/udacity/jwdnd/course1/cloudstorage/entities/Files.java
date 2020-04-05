@@ -1,22 +1,18 @@
 package com.udacity.jwdnd.course1.cloudstorage.entities;
 
-
 public class Files {
-	
-	
-	private Integer fileid;
-	
-	private String filename;
-	
-	private String contenttype;
-	
-	private Long filesize;
-	
-//	private Integer userid;
-	
-	private byte [] filedata;
 
-	
+	private Integer fileid;
+
+	private String filename;
+
+	private String contenttype;
+
+	private Long filesize;
+
+	private Integer userid;
+
+	private byte[] filedata;
 
 	public Integer getFileid() {
 		return fileid;
@@ -42,8 +38,13 @@ public class Files {
 		this.contenttype = contenttype;
 	}
 
+	public Integer getUserid() {
+		return userid;
+	}
 
-
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
 
 	public Long getFilesize() {
 		return filesize;
@@ -60,6 +61,5 @@ public class Files {
 	public void setFiledata(byte[] bs) {
 		this.filedata = bs;
 	}
-	
 
 }

@@ -2,6 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -79,6 +80,24 @@ public class CrudServiceImpl implements CrudServiceInterface {
 				e1.printStackTrace();
 			}
 	}
+	
+//	@Override
+//	public boolean checkAuthority(List<Object> list, Integer id) {
+//		
+//		if(list.get(0) instanceof Credentials) {
+//			for(int i = 0; i < list.size();i++) {
+//				Credentials credentials = (Credentials)list.get(i);
+//				credentials.
+//			}
+//			return true;
+//		}
+//		
+//		
+//		return false;
+//		
+//		
+//		
+//	}
 	
 	
 

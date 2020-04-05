@@ -12,7 +12,7 @@ public class Credentials {
 	
 	private String password;
 	
-//	private Integer userid;
+	private Integer userid;
 
 	public Integer getCredentialid() {
 		return credentialid;
@@ -39,6 +39,14 @@ public class Credentials {
 	}
 
 	
+
+	public Integer getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
 
 	public String getSkeleton() {
 		return skeleton;
