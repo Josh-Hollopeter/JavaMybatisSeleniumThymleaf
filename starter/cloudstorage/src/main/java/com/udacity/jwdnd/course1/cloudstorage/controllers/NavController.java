@@ -57,6 +57,9 @@ public class NavController {
 		if(user.getUsername() != null) {
 		System.err.println(user.getUsername());
 		Users storedUser = usersMapper.getByUsername(user);
+		if(storedUser == null) {
+			return "redirect:login.error";
+		}
 		if (BCrypt.checkpw(user.getPassword(), storedUser.getPassword())) {
 			storedUser.setNotes(notesMapper.findNoteByUserId(storedUser.getUserid()));
 			storedUser.setCredentials(credentialsMapper.findCredentialByUserId(storedUser.getUserid()));

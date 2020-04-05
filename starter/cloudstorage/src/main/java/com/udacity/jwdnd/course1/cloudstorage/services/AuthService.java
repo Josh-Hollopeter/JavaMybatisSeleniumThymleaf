@@ -16,7 +16,7 @@ public class AuthService {
 	@Autowired
 	private PasswordEncoder encoder;
 
-	public Users register(Users user) {
+	public Users register(Users user) throws Exception {
 		String encodedPW = encoder.encode(user.getPassword());
 		user.setPassword(encodedPW); // only persist encoded password
 		

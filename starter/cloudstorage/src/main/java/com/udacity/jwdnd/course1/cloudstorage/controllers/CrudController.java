@@ -54,11 +54,14 @@ public class CrudController {
 		user = (Users) session.getAttribute("user");
 		if(user == null) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
 		}
 		if (note.getNoteid() != null) {
 			crudService.editNotes(note);
 			user.setNotes(notesMapper.findNoteByUserId(user.getUserid()));
+			model.addAttribute("success", "Success");
+
 			return "home";
 
 		} else {
@@ -67,6 +70,8 @@ public class CrudController {
 		}
 		user.setNotes(notesMapper.findNoteByUserId(user.getUserid()));
 		session.setAttribute("user", user);
+		model.addAttribute("success", "Success");
+
 
 		return "home";
 	}
@@ -76,26 +81,32 @@ public class CrudController {
 		user = (Users) session.getAttribute("user");
 		if(user == null) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
 		}
 		Notes note = notesMapper.findNoteById(noteid);
 		notesMapper.addNotetoDatabase(note, user.getUserid());
 		session.setAttribute("user", user);
+		model.addAttribute("success", "Success");
+
 
 		return "home";
 	}
 
 	@RequestMapping("/deleteNote.do{noteid}")
-	public String deleteNote(@RequestParam("noteid") Integer noteid, HttpSession session,HttpServletResponse response) {
+	public String deleteNote(@RequestParam("noteid") Integer noteid, HttpSession session,HttpServletResponse response, Model model) {
 		
 		Users user = (Users) session.getAttribute("user");
 		if(user == null) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
 		}
 		notesMapper.deleteNote(noteid);
 		user.setNotes(notesMapper.findNoteByUserId(user.getUserid()));
 		session.setAttribute("user", user);
+		model.addAttribute("success", "Success");
+
 
 		return "home";
 	}
@@ -107,9 +118,17 @@ public class CrudController {
 		user = (Users) session.getAttribute("user");
 		if(user == null) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
-		}if(credential.getUserid() != user.getUserid()) {
+		}if(credential == null) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
+			return "error";
+			
+		}if(credential.getUserid() == null) {
+		}else if(credential.getUserid() != user.getUserid()) {
+			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
 		}
 		credential.setSkeleton(crudService.generateRandomKey());
@@ -120,6 +139,8 @@ public class CrudController {
 			System.out.println("in add if statement");
 			crudService.editCredentials(credential);
 			user.setCredentials(credentialsMapper.findCredentialByUserId(user.getUserid()));
+			model.addAttribute("success", "Success");
+
 			return "home";
 
 		} else {
@@ -127,24 +148,29 @@ public class CrudController {
 			System.out.print("decrypted password" + encryptionService.decryptValue(credential.getPassword(), credential.getSkeleton()));
 			credentialsMapper.addCredentialtoDatabase(credential, user.getUserid());
 		}
-		
+		model.addAttribute("success", "Success");
+
 		user.setCredentials(credentialsMapper.findCredentialByUserId(user.getUserid()));
 		session.setAttribute("user", user);
 		return "home";
 	}
 
 	@RequestMapping("/deleteCredential.do{credentialid}")
-	public String deleteCredential(@RequestParam("credentialid") Integer credentialid, HttpSession session,HttpServletResponse response) {
+	public String deleteCredential(@RequestParam("credentialid") Integer credentialid, HttpSession session,HttpServletResponse response, Model model) {
 		Users user = (Users) session.getAttribute("user");
 		if(user == null) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
 		}
 		if(credentialsMapper.findCredentialById(credentialid).getUserid() != user.getUserid()) {
 			response.setStatus(403);
+			model.addAttribute("success",null);
 			return "error";
 		}
 		credentialsMapper.deleteCredential(credentialid);
+		model.addAttribute("success", "Success");
+
 		user.setCredentials(credentialsMapper.findCredentialByUserId(user.getUserid()));
 		session.setAttribute("user", user);
 		
@@ -180,13 +206,21 @@ public class CrudController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		filesMapper.addFiletoDatabase(file, user.getUserid());
+		try{
+			filesMapper.addFiletoDatabase(file, user.getUserid());
+		}catch(Exception e) {
+			model.addAttribute("fileerror", "Error inserting file, max file size is 70 KB");
+			return "home";
+		}
+		model.addAttribute("success", "Success");
+		user.setFiles(filesMapper.findFilesByUserId(user.getUserid()));
+		session.setAttribute("user", user);
 		System.out.println(fileUpload.getOriginalFilename());
 		return "home";
 		
 	}
 	@RequestMapping("/deleteFile.do{fileid}")
-	public String deleteFile(@RequestParam("fileid") Integer fileid, HttpSession session,HttpServletResponse response) {
+	public String deleteFile(@RequestParam("fileid") Integer fileid, HttpSession session,HttpServletResponse response, Model model) {
 		Users user = (Users) session.getAttribute("user");
 		if(user == null) {
 			response.setStatus(403);
@@ -198,6 +232,7 @@ public class CrudController {
 		}
 		filesMapper.deleteFileFromDatabase(fileid);
 		user.setFiles(filesMapper.findFilesByUserId(user.getUserid()));
+		model.addAttribute("success", "Success");
 		session.setAttribute("user", user);
 		
 
